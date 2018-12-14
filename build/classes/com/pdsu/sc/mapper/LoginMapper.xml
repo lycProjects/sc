@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.LoginMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.sc.po.Login">
+    <id column="lo_id" jdbcType="INTEGER" property="loId" />
+    <result column="lo_username" jdbcType="VARCHAR" property="loUsername" />
+    <result column="lo_password" jdbcType="VARCHAR" property="loPassword" />
+    <result column="lo_role" jdbcType="INTEGER" property="loRole" />
+    <result column="lo_team" jdbcType="INTEGER" property="loTeam" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    lo_id, lo_username, lo_password, lo_role, lo_team
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.sc.po.LoginExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sc_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sc_login
+    where lo_id = #{loId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sc_login
+    where lo_id = #{loId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.sc.po.LoginExample">
+    delete from sc_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.sc.po.Login">
+    insert into sc_login (lo_id, lo_username, lo_password, 
+      lo_role, lo_team)
+    values (#{loId,jdbcType=INTEGER}, #{loUsername,jdbcType=VARCHAR}, #{loPassword,jdbcType=VARCHAR}, 
+      #{loRole,jdbcType=INTEGER}, #{loTeam,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.sc.po.Login">
+    insert into sc_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loId != null">
+        lo_id,
+      </if>
+      <if test="loUsername != null">
+        lo_username,
+      </if>
+      <if test="loPassword != null">
+        lo_password,
+      </if>
+      <if test="loRole != null">
+        lo_role,
+      </if>
+      <if test="loTeam != null">
+        lo_team,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loId != null">
+        #{loId,jdbcType=INTEGER},
+      </if>
+      <if test="loUsername != null">
+        #{loUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="loPassword != null">
+        #{loPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="loRole != null">
+        #{loRole,jdbcType=INTEGER},
+      </if>
+      <if test="loTeam != null">
+        #{loTeam,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.sc.po.LoginExample" resultType="java.lang.Long">
+    select count(*) from sc_login
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sc_login
+    <set>
+      <if test="record.loId != null">
+        lo_id = #{record.loId,jdbcType=INTEGER},
+      </if>
+      <if test="record.loUsername != null">
+        lo_username = #{record.loUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loPassword != null">
+        lo_password = #{record.loPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loRole != null">
+        lo_role = #{record.loRole,jdbcType=INTEGER},
+      </if>
+      <if test="record.loTeam != null">
+        lo_team = #{record.loTeam,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sc_login
+    set lo_id = #{record.loId,jdbcType=INTEGER},
+      lo_username = #{record.loUsername,jdbcType=VARCHAR},
+      lo_password = #{record.loPassword,jdbcType=VARCHAR},
+      lo_role = #{record.loRole,jdbcType=INTEGER},
+      lo_team = #{record.loTeam,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.sc.po.Login">
+    update sc_login
+    <set>
+      <if test="loUsername != null">
+        lo_username = #{loUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="loPassword != null">
+        lo_password = #{loPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="loRole != null">
+        lo_role = #{loRole,jdbcType=INTEGER},
+      </if>
+      <if test="loTeam != null">
+        lo_team = #{loTeam,jdbcType=INTEGER},
+      </if>
+    </set>
+    where lo_id = #{loId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.sc.po.Login">
+    update sc_login
+    set lo_username = #{loUsername,jdbcType=VARCHAR},
+      lo_password = #{loPassword,jdbcType=VARCHAR},
+      lo_role = #{loRole,jdbcType=INTEGER},
+      lo_team = #{loTeam,jdbcType=INTEGER}
+    where lo_id = #{loId,jdbcType=INTEGER}
+  </update>
+  
+    
+  <!-- 外加的查询 -->
+    
+  <!-- insert -->
+  <select id="loginbackground" parameterType="Login" resultMap="BaseResultMap">
+   SELECT * FROM
+        sc_login WHERE lo_username=#{loUsername} AND lo_password=#{loPassword} AND lo_role=#{loRole} LIMIT 1
+  </select>
+  
+  
+  <!--insert -->
+	<resultMap type="com.pdsu.sc.po.Login" id="queryLoginAllMap">
+	        <id column="lo_id" property="loId"></id>
+			<result column="lo_username" property="loUsername"></result>
+			<result column="lo_password" property="loPassword"></result>
+			<result column="lo_role" property="loRole"></result>
+			<result column="lo_team" property="loTeam"></result>
+		<collection property="roles"
+			ofType="com.pdsu.sc.po.Roles">
+			<id column="id" property="id"></id>
+		    <result column="role" property="role"></result>
+		    <result column="description" property="description"></result>
+		</collection>
+	</resultMap>
+
+	<select id="queryLoginAll" resultMap="queryLoginAllMap">
+		SELECT sc_login.`lo_id`,sc_login.`lo_username`,sc_login.`lo_password`,sc_roles.`role`
+		FROM sc_login,sc_roles
+		WHERE sc_login.`lo_role`=sc_roles.`id`
+	</select>
+</mapper>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.WsruleMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.sc.po.Wsrule">
+    <id column="ws_id" jdbcType="INTEGER" property="wsId" />
+    <result column="ws_team" jdbcType="INTEGER" property="wsTeam" />
+    <result column="ws_recode" jdbcType="VARCHAR" property="wsRecode" />
+    <result column="ws_time" jdbcType="DATE" property="wsTime" />
+  </resultMap>
+  
+  <!-- ============================================================================== -->
+  <resultMap type="com.pdsu.sc.po.Wsrule" id="teamandwsrule">
+  	<id column="" property=""/>
+  	<result column="ws_id" property="wsId"/>
+  	<result column="ws_team" property="wsTeam"/>
+  	<result column="ws_recode" property="wsRecode"/>
+  	<result column="ws_time" property="wsTime"/>
+  	<association property="teammapping" javaType="com.pdsu.sc.po.Teammapping">
+  		<id column="tmm_id" property="tmmId"/>
+  		<result column="tmm_name" property="tmmName"/>
+  	</association>
+  </resultMap>
+  	<select id="selectAll" resultMap="teamandwsrule">
+  		SELECT `sc_teammapping`.`tmm_name`,sc_wsrule.`ws_recode`,sc_wsrule.`ws_time`
+		FROM sc_teammapping,sc_wsrule
+		WHERE sc_wsrule.`ws_team`=sc_teammapping.`tmm_id`
+  	</select>
+  <!-- ============================================================================== -->
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ws_id, ws_team, ws_recode, ws_time
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.sc.po.WsruleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sc_wsrule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sc_wsrule
+    where ws_id = #{wsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sc_wsrule
+    where ws_id = #{wsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.sc.po.WsruleExample">
+    delete from sc_wsrule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.sc.po.Wsrule">
+    insert into sc_wsrule (ws_id, ws_team, ws_recode, 
+      ws_time)
+    values (#{wsId,jdbcType=INTEGER}, #{wsTeam,jdbcType=INTEGER}, #{wsRecode,jdbcType=VARCHAR}, 
+      #{wsTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.sc.po.Wsrule">
+    insert into sc_wsrule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wsId != null">
+        ws_id,
+      </if>
+      <if test="wsTeam != null">
+        ws_team,
+      </if>
+      <if test="wsRecode != null">
+        ws_recode,
+      </if>
+      <if test="wsTime != null">
+        ws_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wsId != null">
+        #{wsId,jdbcType=INTEGER},
+      </if>
+      <if test="wsTeam != null">
+        #{wsTeam,jdbcType=INTEGER},
+      </if>
+      <if test="wsRecode != null">
+        #{wsRecode,jdbcType=VARCHAR},
+      </if>
+      <if test="wsTime != null">
+        #{wsTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.sc.po.WsruleExample" resultType="java.lang.Long">
+    select count(*) from sc_wsrule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sc_wsrule
+    <set>
+      <if test="record.wsId != null">
+        ws_id = #{record.wsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wsTeam != null">
+        ws_team = #{record.wsTeam,jdbcType=INTEGER},
+      </if>
+      <if test="record.wsRecode != null">
+        ws_recode = #{record.wsRecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsTime != null">
+        ws_time = #{record.wsTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sc_wsrule
+    set ws_id = #{record.wsId,jdbcType=INTEGER},
+      ws_team = #{record.wsTeam,jdbcType=INTEGER},
+      ws_recode = #{record.wsRecode,jdbcType=VARCHAR},
+      ws_time = #{record.wsTime,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.sc.po.Wsrule">
+    update sc_wsrule
+    <set>
+      <if test="wsTeam != null">
+        ws_team = #{wsTeam,jdbcType=INTEGER},
+      </if>
+      <if test="wsRecode != null">
+        ws_recode = #{wsRecode,jdbcType=VARCHAR},
+      </if>
+      <if test="wsTime != null">
+        ws_time = #{wsTime,jdbcType=DATE},
+      </if>
+    </set>
+    where ws_id = #{wsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.sc.po.Wsrule">
+    update sc_wsrule
+    set ws_team = #{wsTeam,jdbcType=INTEGER},
+      ws_recode = #{wsRecode,jdbcType=VARCHAR},
+      ws_time = #{wsTime,jdbcType=DATE}
+    where ws_id = #{wsId,jdbcType=INTEGER}
+  </update>
+</mapper>

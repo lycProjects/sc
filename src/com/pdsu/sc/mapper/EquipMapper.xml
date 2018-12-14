@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.EquipMapper">
+	<resultMap id="BaseResultMap" type="com.pdsu.sc.po.Equip">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="eq_name" jdbcType="VARCHAR" property="eqName" />
+		<result column="eq_unit" jdbcType="VARCHAR" property="eqUnit" />
+		<result column="eq_amout" jdbcType="INTEGER" property="eqAmout" />
+		<result column="eq_note" jdbcType="VARCHAR" property="eqNote" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, eq_name, eq_unit, eq_amout, eq_note
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.pdsu.sc.po.EquipExample" resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sc_equip
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sc_equip
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from sc_equip
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.pdsu.sc.po.EquipExample">
+		delete from sc_equip
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.pdsu.sc.po.Equip">
+		insert into sc_equip (id, eq_name, eq_unit,
+		eq_amout, eq_note)
+		values (#{id,jdbcType=INTEGER}, #{eqName,jdbcType=VARCHAR},
+		#{eqUnit,jdbcType=VARCHAR},
+		#{eqAmout,jdbcType=INTEGER}, #{eqNote,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.pdsu.sc.po.Equip">
+		insert into sc_equip
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="eqName != null">
+				eq_name,
+			</if>
+			<if test="eqUnit != null">
+				eq_unit,
+			</if>
+			<if test="eqAmout != null">
+				eq_amout,
+			</if>
+			<if test="eqNote != null">
+				eq_note,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="eqName != null">
+				#{eqName,jdbcType=VARCHAR},
+			</if>
+			<if test="eqUnit != null">
+				#{eqUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="eqAmout != null">
+				#{eqAmout,jdbcType=INTEGER},
+			</if>
+			<if test="eqNote != null">
+				#{eqNote,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.pdsu.sc.po.EquipExample"
+		resultType="java.lang.Long">
+		select count(*) from sc_equip
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sc_equip
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=INTEGER},
+			</if>
+			<if test="record.eqName != null">
+				eq_name = #{record.eqName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.eqUnit != null">
+				eq_unit = #{record.eqUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="record.eqAmout != null">
+				eq_amout = #{record.eqAmout,jdbcType=INTEGER},
+			</if>
+			<if test="record.eqNote != null">
+				eq_note = #{record.eqNote,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sc_equip
+		set id = #{record.id,jdbcType=INTEGER},
+		eq_name = #{record.eqName,jdbcType=VARCHAR},
+		eq_unit = #{record.eqUnit,jdbcType=VARCHAR},
+		eq_amout = #{record.eqAmout,jdbcType=INTEGER},
+		eq_note = #{record.eqNote,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.pdsu.sc.po.Equip">
+		update sc_equip
+		<set>
+			<if test="eqName != null">
+				eq_name = #{eqName,jdbcType=VARCHAR},
+			</if>
+			<if test="eqUnit != null">
+				eq_unit = #{eqUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="eqAmout != null">
+				eq_amout = #{eqAmout,jdbcType=INTEGER},
+			</if>
+			<if test="eqNote != null">
+				eq_note = #{eqNote,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.pdsu.sc.po.Equip">
+		update sc_equip
+		set eq_name = #{eqName,jdbcType=VARCHAR},
+		eq_unit = #{eqUnit,jdbcType=VARCHAR},
+		eq_amout = #{eqAmout,jdbcType=INTEGER},
+		eq_note = #{eqNote,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="queryEquipAll" resultType="com.pdsu.sc.po.Equip">
+		SELECT sc_equip.`id` id,sc_equip.`eq_name` eqName,sc_equip.`eq_unit`
+		eqUnit,sc_equip.`eq_amout` eqAmout,
+		sc_equip.`eq_note` eqNote
+		FROM sc_equip
+	</select>
+	
+    
+    <delete id="delUserById" parameterType="int">
+   DELETE FROM sc_equip WHERE id IN
+    <foreach collection="array" item="id" open="(" separator="," close=")">
+    <!-- collection表示类型，删除是数组,新增是集合,"id"是用户ID(自定义变量名),open表示左括号,separator是逗号,close是右括号 -->
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

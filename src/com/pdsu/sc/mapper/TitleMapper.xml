@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.TitleMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.sc.po.Title">
+    <id column="ti_id" jdbcType="INTEGER" property="tiId" />
+    <result column="ti_type" jdbcType="INTEGER" property="tiType" />
+    <result column="ti_mentionedabove" jdbcType="VARCHAR" property="tiMentionedabove" />
+    <result column="ti_auther" jdbcType="VARCHAR" property="tiAuther" />
+    <result column="ti_autherid" jdbcType="INTEGER" property="tiAutherid" />
+    <result column="ti_addressurl" jdbcType="VARCHAR" property="tiAddressurl" />
+    <result column="ti_releasetime" jdbcType="VARCHAR" property="tiReleasetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ti_id, ti_type, ti_mentionedabove, ti_auther, ti_autherid, ti_addressurl, ti_releasetime
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.sc.po.TitleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sc_title
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sc_title
+    where ti_id = #{tiId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sc_title
+    where ti_id = #{tiId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.sc.po.TitleExample">
+    delete from sc_title
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.sc.po.Title">
+    insert into sc_title (ti_id, ti_type, ti_mentionedabove, 
+      ti_auther, ti_autherid, ti_addressurl, 
+      ti_releasetime)
+    values (#{tiId,jdbcType=INTEGER}, #{tiType,jdbcType=INTEGER}, #{tiMentionedabove,jdbcType=VARCHAR}, 
+      #{tiAuther,jdbcType=VARCHAR}, #{tiAutherid,jdbcType=INTEGER}, #{tiAddressurl,jdbcType=VARCHAR}, 
+      #{tiReleasetime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.sc.po.Title">
+    insert into sc_title
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tiId != null">
+        ti_id,
+      </if>
+      <if test="tiType != null">
+        ti_type,
+      </if>
+      <if test="tiMentionedabove != null">
+        ti_mentionedabove,
+      </if>
+      <if test="tiAuther != null">
+        ti_auther,
+      </if>
+      <if test="tiAutherid != null">
+        ti_autherid,
+      </if>
+      <if test="tiAddressurl != null">
+        ti_addressurl,
+      </if>
+      <if test="tiReleasetime != null">
+        ti_releasetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tiId != null">
+        #{tiId,jdbcType=INTEGER},
+      </if>
+      <if test="tiType != null">
+        #{tiType,jdbcType=INTEGER},
+      </if>
+      <if test="tiMentionedabove != null">
+        #{tiMentionedabove,jdbcType=VARCHAR},
+      </if>
+      <if test="tiAuther != null">
+        #{tiAuther,jdbcType=VARCHAR},
+      </if>
+      <if test="tiAutherid != null">
+        #{tiAutherid,jdbcType=INTEGER},
+      </if>
+      <if test="tiAddressurl != null">
+        #{tiAddressurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tiReleasetime != null">
+        #{tiReleasetime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.sc.po.TitleExample" resultType="java.lang.Long">
+    select count(*) from sc_title
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sc_title
+    <set>
+      <if test="record.tiId != null">
+        ti_id = #{record.tiId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tiType != null">
+        ti_type = #{record.tiType,jdbcType=INTEGER},
+      </if>
+      <if test="record.tiMentionedabove != null">
+        ti_mentionedabove = #{record.tiMentionedabove,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tiAuther != null">
+        ti_auther = #{record.tiAuther,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tiAutherid != null">
+        ti_autherid = #{record.tiAutherid,jdbcType=INTEGER},
+      </if>
+      <if test="record.tiAddressurl != null">
+        ti_addressurl = #{record.tiAddressurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tiReleasetime != null">
+        ti_releasetime = #{record.tiReleasetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sc_title
+    set ti_id = #{record.tiId,jdbcType=INTEGER},
+      ti_type = #{record.tiType,jdbcType=INTEGER},
+      ti_mentionedabove = #{record.tiMentionedabove,jdbcType=VARCHAR},
+      ti_auther = #{record.tiAuther,jdbcType=VARCHAR},
+      ti_autherid = #{record.tiAutherid,jdbcType=INTEGER},
+      ti_addressurl = #{record.tiAddressurl,jdbcType=VARCHAR},
+      ti_releasetime = #{record.tiReleasetime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.sc.po.Title">
+    update sc_title
+    <set>
+      <if test="tiType != null">
+        ti_type = #{tiType,jdbcType=INTEGER},
+      </if>
+      <if test="tiMentionedabove != null">
+        ti_mentionedabove = #{tiMentionedabove,jdbcType=VARCHAR},
+      </if>
+      <if test="tiAuther != null">
+        ti_auther = #{tiAuther,jdbcType=VARCHAR},
+      </if>
+      <if test="tiAutherid != null">
+        ti_autherid = #{tiAutherid,jdbcType=INTEGER},
+      </if>
+      <if test="tiAddressurl != null">
+        ti_addressurl = #{tiAddressurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tiReleasetime != null">
+        ti_releasetime = #{tiReleasetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ti_id = #{tiId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.sc.po.Title">
+    update sc_title
+    set ti_type = #{tiType,jdbcType=INTEGER},
+      ti_mentionedabove = #{tiMentionedabove,jdbcType=VARCHAR},
+      ti_auther = #{tiAuther,jdbcType=VARCHAR},
+      ti_autherid = #{tiAutherid,jdbcType=INTEGER},
+      ti_addressurl = #{tiAddressurl,jdbcType=VARCHAR},
+      ti_releasetime = #{tiReleasetime,jdbcType=VARCHAR}
+    where ti_id = #{tiId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.ApplicationMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.sc.po.Application">
+    <id column="ap_id" jdbcType="INTEGER" property="apId" />
+    <result column="ap_state" jdbcType="INTEGER" property="apState" />
+    <result column="ap_statename" jdbcType="VARCHAR" property="apStatename" />
+    <result column="ap_projectid" jdbcType="INTEGER" property="apProjectid" />
+    <result column="ap_projectname" jdbcType="VARCHAR" property="apProjectname" />
+    <result column="ap_teamid" jdbcType="INTEGER" property="apTeamid" />
+    <result column="ap_teamname" jdbcType="VARCHAR" property="apTeamname" />
+    <result column="ap_time" jdbcType="VARCHAR" property="apTime" />
+    <result column="ap_reason" jdbcType="VARCHAR" property="apReason" />
+    <result column="ap_handletime" jdbcType="VARCHAR" property="apHandletime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ap_id, ap_state, ap_statename, ap_projectid, ap_projectname, ap_teamid, ap_teamname, 
+    ap_time, ap_reason, ap_handletime
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.sc.po.ApplicationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sc_application
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sc_application
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sc_application
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.sc.po.ApplicationExample">
+    delete from sc_application
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.sc.po.Application">
+    insert into sc_application (ap_id, ap_state, ap_statename, 
+      ap_projectid, ap_projectname, ap_teamid, 
+      ap_teamname, ap_time, ap_reason, 
+      ap_handletime)
+    values (#{apId,jdbcType=INTEGER}, #{apState,jdbcType=INTEGER}, #{apStatename,jdbcType=VARCHAR}, 
+      #{apProjectid,jdbcType=INTEGER}, #{apProjectname,jdbcType=VARCHAR}, #{apTeamid,jdbcType=INTEGER}, 
+      #{apTeamname,jdbcType=VARCHAR}, #{apTime,jdbcType=VARCHAR}, #{apReason,jdbcType=VARCHAR}, 
+      #{apHandletime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.sc.po.Application">
+    insert into sc_application
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        ap_id,
+      </if>
+      <if test="apState != null">
+        ap_state,
+      </if>
+      <if test="apStatename != null">
+        ap_statename,
+      </if>
+      <if test="apProjectid != null">
+        ap_projectid,
+      </if>
+      <if test="apProjectname != null">
+        ap_projectname,
+      </if>
+      <if test="apTeamid != null">
+        ap_teamid,
+      </if>
+      <if test="apTeamname != null">
+        ap_teamname,
+      </if>
+      <if test="apTime != null">
+        ap_time,
+      </if>
+      <if test="apReason != null">
+        ap_reason,
+      </if>
+      <if test="apHandletime != null">
+        ap_handletime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        #{apId,jdbcType=INTEGER},
+      </if>
+      <if test="apState != null">
+        #{apState,jdbcType=INTEGER},
+      </if>
+      <if test="apStatename != null">
+        #{apStatename,jdbcType=VARCHAR},
+      </if>
+      <if test="apProjectid != null">
+        #{apProjectid,jdbcType=INTEGER},
+      </if>
+      <if test="apProjectname != null">
+        #{apProjectname,jdbcType=VARCHAR},
+      </if>
+      <if test="apTeamid != null">
+        #{apTeamid,jdbcType=INTEGER},
+      </if>
+      <if test="apTeamname != null">
+        #{apTeamname,jdbcType=VARCHAR},
+      </if>
+      <if test="apTime != null">
+        #{apTime,jdbcType=VARCHAR},
+      </if>
+      <if test="apReason != null">
+        #{apReason,jdbcType=VARCHAR},
+      </if>
+      <if test="apHandletime != null">
+        #{apHandletime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.sc.po.ApplicationExample" resultType="java.lang.Long">
+    select count(*) from sc_application
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sc_application
+    <set>
+      <if test="record.apId != null">
+        ap_id = #{record.apId,jdbcType=INTEGER},
+      </if>
+      <if test="record.apState != null">
+        ap_state = #{record.apState,jdbcType=INTEGER},
+      </if>
+      <if test="record.apStatename != null">
+        ap_statename = #{record.apStatename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apProjectid != null">
+        ap_projectid = #{record.apProjectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.apProjectname != null">
+        ap_projectname = #{record.apProjectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apTeamid != null">
+        ap_teamid = #{record.apTeamid,jdbcType=INTEGER},
+      </if>
+      <if test="record.apTeamname != null">
+        ap_teamname = #{record.apTeamname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apTime != null">
+        ap_time = #{record.apTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apReason != null">
+        ap_reason = #{record.apReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apHandletime != null">
+        ap_handletime = #{record.apHandletime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sc_application
+    set ap_id = #{record.apId,jdbcType=INTEGER},
+      ap_state = #{record.apState,jdbcType=INTEGER},
+      ap_statename = #{record.apStatename,jdbcType=VARCHAR},
+      ap_projectid = #{record.apProjectid,jdbcType=INTEGER},
+      ap_projectname = #{record.apProjectname,jdbcType=VARCHAR},
+      ap_teamid = #{record.apTeamid,jdbcType=INTEGER},
+      ap_teamname = #{record.apTeamname,jdbcType=VARCHAR},
+      ap_time = #{record.apTime,jdbcType=VARCHAR},
+      ap_reason = #{record.apReason,jdbcType=VARCHAR},
+      ap_handletime = #{record.apHandletime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.sc.po.Application">
+    update sc_application
+    <set>
+      <if test="apState != null">
+        ap_state = #{apState,jdbcType=INTEGER},
+      </if>
+      <if test="apStatename != null">
+        ap_statename = #{apStatename,jdbcType=VARCHAR},
+      </if>
+      <if test="apProjectid != null">
+        ap_projectid = #{apProjectid,jdbcType=INTEGER},
+      </if>
+      <if test="apProjectname != null">
+        ap_projectname = #{apProjectname,jdbcType=VARCHAR},
+      </if>
+      <if test="apTeamid != null">
+        ap_teamid = #{apTeamid,jdbcType=INTEGER},
+      </if>
+      <if test="apTeamname != null">
+        ap_teamname = #{apTeamname,jdbcType=VARCHAR},
+      </if>
+      <if test="apTime != null">
+        ap_time = #{apTime,jdbcType=VARCHAR},
+      </if>
+      <if test="apReason != null">
+        ap_reason = #{apReason,jdbcType=VARCHAR},
+      </if>
+      <if test="apHandletime != null">
+        ap_handletime = #{apHandletime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.sc.po.Application">
+    update sc_application
+    set ap_state = #{apState,jdbcType=INTEGER},
+      ap_statename = #{apStatename,jdbcType=VARCHAR},
+      ap_projectid = #{apProjectid,jdbcType=INTEGER},
+      ap_projectname = #{apProjectname,jdbcType=VARCHAR},
+      ap_teamid = #{apTeamid,jdbcType=INTEGER},
+      ap_teamname = #{apTeamname,jdbcType=VARCHAR},
+      ap_time = #{apTime,jdbcType=VARCHAR},
+      ap_reason = #{apReason,jdbcType=VARCHAR},
+      ap_handletime = #{apHandletime,jdbcType=VARCHAR}
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </update>
+</mapper>

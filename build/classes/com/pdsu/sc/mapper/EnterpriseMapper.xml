@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.EnterpriseMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.sc.po.Enterprise">
+    <id column="en_id" jdbcType="INTEGER" property="enId" />
+    <id column="en_name" jdbcType="VARCHAR" property="enName" />
+    <result column="en_briefintroduction" jdbcType="VARCHAR" property="enBriefintroduction" />
+    <result column="en_phone" jdbcType="VARCHAR" property="enPhone" />
+    <result column="en_recruitment" jdbcType="VARCHAR" property="enRecruitment" />
+    <result column="en_picture" jdbcType="VARCHAR" property="enPicture" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    en_id, en_name, en_briefintroduction, en_phone, en_recruitment, en_picture
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.sc.po.EnterpriseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sc_enterprise
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.pdsu.sc.po.EnterpriseKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sc_enterprise
+    where en_id = #{enId,jdbcType=INTEGER}
+    <if test="enName != null">
+      and en_name = #{enName,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.pdsu.sc.po.EnterpriseKey">
+    delete from sc_enterprise
+    where en_id = #{enId,jdbcType=INTEGER}
+    <if test="enName != null">
+      and en_name = #{enName,jdbcType=VARCHAR}
+    </if>
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.sc.po.EnterpriseExample">
+    delete from sc_enterprise
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.sc.po.Enterprise">
+    insert into sc_enterprise (en_id, en_name, en_briefintroduction, 
+      en_phone, en_recruitment, en_picture
+      )
+    values (#{enId,jdbcType=INTEGER}, #{enName,jdbcType=VARCHAR}, #{enBriefintroduction,jdbcType=VARCHAR}, 
+      #{enPhone,jdbcType=VARCHAR}, #{enRecruitment,jdbcType=VARCHAR}, #{enPicture,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.sc.po.Enterprise">
+    insert into sc_enterprise
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enId != null">
+        en_id,
+      </if>
+      <if test="enName != null">
+        en_name,
+      </if>
+      <if test="enBriefintroduction != null">
+        en_briefintroduction,
+      </if>
+      <if test="enPhone != null">
+        en_phone,
+      </if>
+      <if test="enRecruitment != null">
+        en_recruitment,
+      </if>
+      <if test="enPicture != null">
+        en_picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enId != null">
+        #{enId,jdbcType=INTEGER},
+      </if>
+      <if test="enName != null">
+        #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="enBriefintroduction != null">
+        #{enBriefintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="enPhone != null">
+        #{enPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="enRecruitment != null">
+        #{enRecruitment,jdbcType=VARCHAR},
+      </if>
+      <if test="enPicture != null">
+        #{enPicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.sc.po.EnterpriseExample" resultType="java.lang.Long">
+    select count(*) from sc_enterprise
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sc_enterprise
+    <set>
+      <if test="record.enId != null">
+        en_id = #{record.enId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enName != null">
+        en_name = #{record.enName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enBriefintroduction != null">
+        en_briefintroduction = #{record.enBriefintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enPhone != null">
+        en_phone = #{record.enPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enRecruitment != null">
+        en_recruitment = #{record.enRecruitment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enPicture != null">
+        en_picture = #{record.enPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sc_enterprise
+    set en_id = #{record.enId,jdbcType=INTEGER},
+      en_name = #{record.enName,jdbcType=VARCHAR},
+      en_briefintroduction = #{record.enBriefintroduction,jdbcType=VARCHAR},
+      en_phone = #{record.enPhone,jdbcType=VARCHAR},
+      en_recruitment = #{record.enRecruitment,jdbcType=VARCHAR},
+      en_picture = #{record.enPicture,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.sc.po.Enterprise">
+    update sc_enterprise
+    <set>
+      <if test="enName != null">
+     	en_name = #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="enBriefintroduction != null">
+        en_briefintroduction = #{enBriefintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="enPhone != null">
+        en_phone = #{enPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="enRecruitment != null">
+        en_recruitment = #{enRecruitment,jdbcType=VARCHAR},
+      </if>
+      <if test="enPicture != null">
+        en_picture = #{enPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where en_id = #{enId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.sc.po.Enterprise">
+    update sc_enterprise
+    set en_briefintroduction = #{enBriefintroduction,jdbcType=VARCHAR},
+      en_phone = #{enPhone,jdbcType=VARCHAR},
+      en_recruitment = #{enRecruitment,jdbcType=VARCHAR},
+      en_picture = #{enPicture,jdbcType=VARCHAR}
+    where en_id = #{enId,jdbcType=INTEGER}
+    <if test="enName != null">
+      and en_name = #{enName,jdbcType=VARCHAR}
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.NewsNewMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.sc.po.NewsNew">
+    <id column="newsnew_id" jdbcType="INTEGER" property="newsnewId" />
+    <result column="newsnew_title" jdbcType="VARCHAR" property="newsnewTitle" />
+    <result column="newsnew_brief" jdbcType="VARCHAR" property="newsnewBrief" />
+    <result column="newsnew_authorName" jdbcType="VARCHAR" property="newsnewAuthorname" />
+    <result column="newsnew_htmlUri" jdbcType="VARCHAR" property="newsnewHtmluri" />
+    <result column="newsnew_pubTime" jdbcType="VARCHAR" property="newsnewPubtime" />
+    <result column="newscate_id" jdbcType="INTEGER" property="newscateId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    newsnew_id, newsnew_title, newsnew_brief, newsnew_authorName, newsnew_htmlUri, newsnew_pubTime, 
+    newscate_id
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.sc.po.NewsNewExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sc_news_new
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sc_news_new
+    where newsnew_id = #{newsnewId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sc_news_new
+    where newsnew_id = #{newsnewId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.sc.po.NewsNewExample">
+    delete from sc_news_new
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.sc.po.NewsNew">
+    insert into sc_news_new (newsnew_id, newsnew_title, newsnew_brief, 
+      newsnew_authorName, newsnew_htmlUri, newsnew_pubTime, 
+      newscate_id)
+    values (#{newsnewId,jdbcType=INTEGER}, #{newsnewTitle,jdbcType=VARCHAR}, #{newsnewBrief,jdbcType=VARCHAR}, 
+      #{newsnewAuthorname,jdbcType=VARCHAR}, #{newsnewHtmluri,jdbcType=VARCHAR}, #{newsnewPubtime,jdbcType=VARCHAR}, 
+      #{newscateId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.sc.po.NewsNew">
+    insert into sc_news_new
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsnewId != null">
+        newsnew_id,
+      </if>
+      <if test="newsnewTitle != null">
+        newsnew_title,
+      </if>
+      <if test="newsnewBrief != null">
+        newsnew_brief,
+      </if>
+      <if test="newsnewAuthorname != null">
+        newsnew_authorName,
+      </if>
+      <if test="newsnewHtmluri != null">
+        newsnew_htmlUri,
+      </if>
+      <if test="newsnewPubtime != null">
+        newsnew_pubTime,
+      </if>
+      <if test="newscateId != null">
+        newscate_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsnewId != null">
+        #{newsnewId,jdbcType=INTEGER},
+      </if>
+      <if test="newsnewTitle != null">
+        #{newsnewTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsnewBrief != null">
+        #{newsnewBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="newsnewAuthorname != null">
+        #{newsnewAuthorname,jdbcType=VARCHAR},
+      </if>
+      <if test="newsnewHtmluri != null">
+        #{newsnewHtmluri,jdbcType=VARCHAR},
+      </if>
+      <if test="newsnewPubtime != null">
+        #{newsnewPubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="newscateId != null">
+        #{newscateId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.sc.po.NewsNewExample" resultType="java.lang.Long">
+    select count(*) from sc_news_new
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sc_news_new
+    <set>
+      <if test="record.newsnewId != null">
+        newsnew_id = #{record.newsnewId,jdbcType=INTEGER},
+      </if>
+      <if test="record.newsnewTitle != null">
+        newsnew_title = #{record.newsnewTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newsnewBrief != null">
+        newsnew_brief = #{record.newsnewBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newsnewAuthorname != null">
+        newsnew_authorName = #{record.newsnewAuthorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newsnewHtmluri != null">
+        newsnew_htmlUri = #{record.newsnewHtmluri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newsnewPubtime != null">
+        newsnew_pubTime = #{record.newsnewPubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newscateId != null">
+        newscate_id = #{record.newscateId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sc_news_new
+    set newsnew_id = #{record.newsnewId,jdbcType=INTEGER},
+      newsnew_title = #{record.newsnewTitle,jdbcType=VARCHAR},
+      newsnew_brief = #{record.newsnewBrief,jdbcType=VARCHAR},
+      newsnew_authorName = #{record.newsnewAuthorname,jdbcType=VARCHAR},
+      newsnew_htmlUri = #{record.newsnewHtmluri,jdbcType=VARCHAR},
+      newsnew_pubTime = #{record.newsnewPubtime,jdbcType=VARCHAR},
+      newscate_id = #{record.newscateId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.sc.po.NewsNew">
+    update sc_news_new
+    <set>
+      <if test="newsnewTitle != null">
+        newsnew_title = #{newsnewTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsnewBrief != null">
+        newsnew_brief = #{newsnewBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="newsnewAuthorname != null">
+        newsnew_authorName = #{newsnewAuthorname,jdbcType=VARCHAR},
+      </if>
+      <if test="newsnewHtmluri != null">
+        newsnew_htmlUri = #{newsnewHtmluri,jdbcType=VARCHAR},
+      </if>
+      <if test="newsnewPubtime != null">
+        newsnew_pubTime = #{newsnewPubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="newscateId != null">
+        newscate_id = #{newscateId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where newsnew_id = #{newsnewId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.sc.po.NewsNew">
+    update sc_news_new
+    set newsnew_title = #{newsnewTitle,jdbcType=VARCHAR},
+      newsnew_brief = #{newsnewBrief,jdbcType=VARCHAR},
+      newsnew_authorName = #{newsnewAuthorname,jdbcType=VARCHAR},
+      newsnew_htmlUri = #{newsnewHtmluri,jdbcType=VARCHAR},
+      newsnew_pubTime = #{newsnewPubtime,jdbcType=VARCHAR},
+      newscate_id = #{newscateId,jdbcType=INTEGER}
+    where newsnew_id = #{newsnewId,jdbcType=INTEGER}
+  </update>
+</mapper>

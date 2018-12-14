@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.JlruleMapper">
+	<resultMap id="BaseResultMap" type="com.pdsu.sc.po.Jlrule">
+		<id column="jl_id" jdbcType="INTEGER" property="jlId" />
+		<result column="jl_team" jdbcType="INTEGER" property="jlTeam" />
+		<result column="jl_recode" jdbcType="VARCHAR"
+			property="jlRecode" />
+		<result column="jl_time" jdbcType="DATE" property="jlTime" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		jl_id, jl_team, jl_recode, jl_time
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.pdsu.sc.po.JlruleExample" resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sc_jlrule
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sc_jlrule
+		where jl_id = #{jlId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from sc_jlrule
+		where jl_id = #{jlId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.pdsu.sc.po.JlruleExample">
+		delete from sc_jlrule
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.pdsu.sc.po.Jlrule">
+		insert into sc_jlrule (jl_id, jl_team, jl_recode,
+		jl_time)
+		values (#{jlId,jdbcType=INTEGER}, #{jlTeam,jdbcType=INTEGER},
+		#{jlRecode,jdbcType=VARCHAR},
+		#{jlTime,jdbcType=DATE})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.pdsu.sc.po.Jlrule">
+		insert into sc_jlrule
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="jlId != null">
+				jl_id,
+			</if>
+			<if test="jlTeam != null">
+				jl_team,
+			</if>
+			<if test="jlRecode != null">
+				jl_recode,
+			</if>
+			<if test="jlTime != null">
+				jl_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="jlId != null">
+				#{jlId,jdbcType=INTEGER},
+			</if>
+			<if test="jlTeam != null">
+				#{jlTeam,jdbcType=INTEGER},
+			</if>
+			<if test="jlRecode != null">
+				#{jlRecode,jdbcType=VARCHAR},
+			</if>
+			<if test="jlTime != null">
+				#{jlTime,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.pdsu.sc.po.JlruleExample"
+		resultType="java.lang.Long">
+		select count(*) from sc_jlrule
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sc_jlrule
+		<set>
+			<if test="record.jlId != null">
+				jl_id = #{record.jlId,jdbcType=INTEGER},
+			</if>
+			<if test="record.jlTeam != null">
+				jl_team = #{record.jlTeam,jdbcType=INTEGER},
+			</if>
+			<if test="record.jlRecode != null">
+				jl_recode = #{record.jlRecode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.jlTime != null">
+				jl_time = #{record.jlTime,jdbcType=DATE},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sc_jlrule
+		set jl_id = #{record.jlId,jdbcType=INTEGER},
+		jl_team = #{record.jlTeam,jdbcType=INTEGER},
+		jl_recode = #{record.jlRecode,jdbcType=VARCHAR},
+		jl_time = #{record.jlTime,jdbcType=DATE}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.pdsu.sc.po.Jlrule">
+		update sc_jlrule
+		<set>
+			<if test="jlTeam != null">
+				jl_team = #{jlTeam,jdbcType=INTEGER},
+			</if>
+			<if test="jlRecode != null">
+				jl_recode = #{jlRecode,jdbcType=VARCHAR},
+			</if>
+			<if test="jlTime != null">
+				jl_time = #{jlTime,jdbcType=DATE},
+			</if>
+		</set>
+		where jl_id = #{jlId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.pdsu.sc.po.Jlrule">
+		update sc_jlrule
+		set jl_team = #{jlTeam,jdbcType=INTEGER},
+		jl_recode = #{jlRecode,jdbcType=VARCHAR},
+		jl_time = #{jlTime,jdbcType=DATE}
+		where jl_id = #{jlId,jdbcType=INTEGER}
+	</update>
+
+	<!--列表查询 -->
+	<resultMap type="com.pdsu.sc.po.Jlrule"
+		id="queryJlruleAllMap">
+		<id column="jl_id" property="jlId"></id>
+		<result column="jl_team" property="jlTeam"></result>
+		<result column="jl_recode" property="jlRecode"></result>
+		<result column="jl_time" property="jlTime"></result>
+		
+		<collection property="teammapping"
+			ofType="com.pdsu.sc.po.Teammapping">
+			<id column="tmm_id" property="tmmId"></id>
+			<result column="tmm_name" property="tmmName"></result>
+		</collection>
+
+	</resultMap>
+
+
+	<select id="queryJlruleAll" resultMap="queryJlruleAllMap">
+		SELECT
+		sc_jlrule.`jl_id`,sc_teammapping.`tmm_name`,sc_jlrule.`jl_recode`,sc_jlrule.`jl_time`
+		FROM sc_jlrule,sc_teammapping
+		WHERE sc_jlrule.`jl_team`=sc_teammapping.`tmm_id`
+	</select>
+	
+	<select id="queryJlruleByTeam" parameterType="Integer" resultMap="queryJlruleAllMap">
+		SELECT
+		sc_jlrule.`jl_id`,sc_teammapping.`tmm_name`,sc_jlrule.`jl_recode`,sc_jlrule.`jl_time`
+		FROM sc_jlrule,sc_teammapping
+		WHERE sc_jlrule.`jl_team`=sc_teammapping.`tmm_id` AND sc_jlrule.`jl_team`=#{jlTeam}
+	</select>
+	
+	
+
+</mapper>

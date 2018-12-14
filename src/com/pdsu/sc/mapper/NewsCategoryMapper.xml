@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.NewsCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.pdsu.sc.po.NewsCategory">
+    <id column="newscate_id" jdbcType="INTEGER" property="newscateId" />
+    <result column="newscate_title" jdbcType="VARCHAR" property="newscateTitle" />
+    <result column="newscate_brief" jdbcType="VARCHAR" property="newscateBrief" />
+    <result column="newscate_mark" jdbcType="VARCHAR" property="newscateMark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    newscate_id, newscate_title, newscate_brief, newscate_mark
+  </sql>
+  <select id="selectByExample" parameterType="com.pdsu.sc.po.NewsCategoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sc_news_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sc_news_category
+    where newscate_id = #{newscateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sc_news_category
+    where newscate_id = #{newscateId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pdsu.sc.po.NewsCategoryExample">
+    delete from sc_news_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pdsu.sc.po.NewsCategory">
+    insert into sc_news_category (newscate_id, newscate_title, newscate_brief, 
+      newscate_mark)
+    values (#{newscateId,jdbcType=INTEGER}, #{newscateTitle,jdbcType=VARCHAR}, #{newscateBrief,jdbcType=VARCHAR}, 
+      #{newscateMark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pdsu.sc.po.NewsCategory">
+    insert into sc_news_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newscateId != null">
+        newscate_id,
+      </if>
+      <if test="newscateTitle != null">
+        newscate_title,
+      </if>
+      <if test="newscateBrief != null">
+        newscate_brief,
+      </if>
+      <if test="newscateMark != null">
+        newscate_mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newscateId != null">
+        #{newscateId,jdbcType=INTEGER},
+      </if>
+      <if test="newscateTitle != null">
+        #{newscateTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newscateBrief != null">
+        #{newscateBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="newscateMark != null">
+        #{newscateMark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pdsu.sc.po.NewsCategoryExample" resultType="java.lang.Long">
+    select count(*) from sc_news_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sc_news_category
+    <set>
+      <if test="record.newscateId != null">
+        newscate_id = #{record.newscateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.newscateTitle != null">
+        newscate_title = #{record.newscateTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newscateBrief != null">
+        newscate_brief = #{record.newscateBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newscateMark != null">
+        newscate_mark = #{record.newscateMark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sc_news_category
+    set newscate_id = #{record.newscateId,jdbcType=INTEGER},
+      newscate_title = #{record.newscateTitle,jdbcType=VARCHAR},
+      newscate_brief = #{record.newscateBrief,jdbcType=VARCHAR},
+      newscate_mark = #{record.newscateMark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.sc.po.NewsCategory">
+    update sc_news_category
+    <set>
+      <if test="newscateTitle != null">
+        newscate_title = #{newscateTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newscateBrief != null">
+        newscate_brief = #{newscateBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="newscateMark != null">
+        newscate_mark = #{newscateMark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where newscate_id = #{newscateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pdsu.sc.po.NewsCategory">
+    update sc_news_category
+    set newscate_title = #{newscateTitle,jdbcType=VARCHAR},
+      newscate_brief = #{newscateBrief,jdbcType=VARCHAR},
+      newscate_mark = #{newscateMark,jdbcType=VARCHAR}
+    where newscate_id = #{newscateId,jdbcType=INTEGER}
+  </update>
+</mapper>

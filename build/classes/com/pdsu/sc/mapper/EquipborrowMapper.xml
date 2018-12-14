@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.EquipborrowMapper">
+	<resultMap id="BaseResultMap"
+		type="com.pdsu.sc.po.Equipborrow">
+		<id column="eqb_id" jdbcType="INTEGER" property="eqbId" />
+		<result column="eqb_team" jdbcType="INTEGER" property="eqbTeam" />
+		<result column="eqb_zfour" jdbcType="INTEGER"
+			property="eqbZfour" />
+		<result column="eqb_oneg" jdbcType="INTEGER" property="eqbOneg" />
+		<result column="eqb_twog" jdbcType="INTEGER" property="eqbTwog" />
+		<result column="eqb_fourg" jdbcType="INTEGER"
+			property="eqbFourg" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		eqb_id, eqb_team, eqb_zfour, eqb_oneg, eqb_twog, eqb_fourg
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.pdsu.sc.po.EquipborrowExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sc_equipborrow
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sc_equipborrow
+		where eqb_id = #{eqbId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from sc_equipborrow
+		where eqb_id = #{eqbId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.pdsu.sc.po.EquipborrowExample">
+		delete from sc_equipborrow
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.pdsu.sc.po.Equipborrow">
+		insert into sc_equipborrow (eqb_id, eqb_team, eqb_zfour,
+		eqb_oneg, eqb_twog, eqb_fourg
+		)
+		values (#{eqbId,jdbcType=INTEGER}, #{eqbTeam,jdbcType=INTEGER},
+		#{eqbZfour,jdbcType=INTEGER},
+		#{eqbOneg,jdbcType=INTEGER}, #{eqbTwog,jdbcType=INTEGER}, #{eqbFourg,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.pdsu.sc.po.Equipborrow">
+		insert into sc_equipborrow
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="eqbId != null">
+				eqb_id,
+			</if>
+			<if test="eqbTeam != null">
+				eqb_team,
+			</if>
+			<if test="eqbZfour != null">
+				eqb_zfour,
+			</if>
+			<if test="eqbOneg != null">
+				eqb_oneg,
+			</if>
+			<if test="eqbTwog != null">
+				eqb_twog,
+			</if>
+			<if test="eqbFourg != null">
+				eqb_fourg,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="eqbId != null">
+				#{eqbId,jdbcType=INTEGER},
+			</if>
+			<if test="eqbTeam != null">
+				#{eqbTeam,jdbcType=INTEGER},
+			</if>
+			<if test="eqbZfour != null">
+				#{eqbZfour,jdbcType=INTEGER},
+			</if>
+			<if test="eqbOneg != null">
+				#{eqbOneg,jdbcType=INTEGER},
+			</if>
+			<if test="eqbTwog != null">
+				#{eqbTwog,jdbcType=INTEGER},
+			</if>
+			<if test="eqbFourg != null">
+				#{eqbFourg,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.pdsu.sc.po.EquipborrowExample"
+		resultType="java.lang.Long">
+		select count(*) from sc_equipborrow
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sc_equipborrow
+		<set>
+			<if test="record.eqbId != null">
+				eqb_id = #{record.eqbId,jdbcType=INTEGER},
+			</if>
+			<if test="record.eqbTeam != null">
+				eqb_team = #{record.eqbTeam,jdbcType=INTEGER},
+			</if>
+			<if test="record.eqbZfour != null">
+				eqb_zfour = #{record.eqbZfour,jdbcType=INTEGER},
+			</if>
+			<if test="record.eqbOneg != null">
+				eqb_oneg = #{record.eqbOneg,jdbcType=INTEGER},
+			</if>
+			<if test="record.eqbTwog != null">
+				eqb_twog = #{record.eqbTwog,jdbcType=INTEGER},
+			</if>
+			<if test="record.eqbFourg != null">
+				eqb_fourg = #{record.eqbFourg,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sc_equipborrow
+		set eqb_id = #{record.eqbId,jdbcType=INTEGER},
+		eqb_team = #{record.eqbTeam,jdbcType=INTEGER},
+		eqb_zfour = #{record.eqbZfour,jdbcType=INTEGER},
+		eqb_oneg = #{record.eqbOneg,jdbcType=INTEGER},
+		eqb_twog = #{record.eqbTwog,jdbcType=INTEGER},
+		eqb_fourg = #{record.eqbFourg,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.pdsu.sc.po.Equipborrow">
+		update sc_equipborrow
+		<set>
+			<if test="eqbTeam != null">
+				eqb_team = #{eqbTeam,jdbcType=INTEGER},
+			</if>
+			<if test="eqbZfour != null">
+				eqb_zfour = #{eqbZfour,jdbcType=INTEGER},
+			</if>
+			<if test="eqbOneg != null">
+				eqb_oneg = #{eqbOneg,jdbcType=INTEGER},
+			</if>
+			<if test="eqbTwog != null">
+				eqb_twog = #{eqbTwog,jdbcType=INTEGER},
+			</if>
+			<if test="eqbFourg != null">
+				eqb_fourg = #{eqbFourg,jdbcType=INTEGER},
+			</if>
+		</set>
+		where eqb_id = #{eqbId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.pdsu.sc.po.Equipborrow">
+		update sc_equipborrow
+		set eqb_team = #{eqbTeam,jdbcType=INTEGER},
+		eqb_zfour = #{eqbZfour,jdbcType=INTEGER},
+		eqb_oneg = #{eqbOneg,jdbcType=INTEGER},
+		eqb_twog = #{eqbTwog,jdbcType=INTEGER},
+		eqb_fourg = #{eqbFourg,jdbcType=INTEGER}
+		where eqb_id = #{eqbId,jdbcType=INTEGER}
+	</update>
+
+	<!--insert -->
+	<resultMap type="com.pdsu.sc.po.Equipborrow" id="queryAllMap">
+	        <id column="eqb_id" property="eqbId"></id>
+			<result column="eqb_team" property="eqbTeam"></result>
+			<result column="eqb_zfour" property="eqbZfour"></result>
+			<result column="eqb_oneg" property="eqbOneg"></result>
+			<result column="eqb_twog" property="eqbTwog"></result>
+			<result column="eqb_fourg" property="eqbFourg"></result>
+		
+		<collection property="teammapping"
+			ofType="com.pdsu.sc.po.Teammapping">
+			<id column="tmm_id" property="tmmId"></id>
+		    <result column="tmm_name" property="tmmName"></result>
+		</collection>
+	</resultMap>
+
+	<select id="queryAll" resultMap="queryAllMap">
+		SELECT
+		sc_equipborrow.`eqb_id`,sc_teammapping.`tmm_name`,sc_equipborrow.`eqb_zfour`,sc_equipborrow.`eqb_oneg`,sc_equipborrow.`eqb_twog`,sc_equipborrow.`eqb_fourg`
+		FROM sc_equipborrow,sc_teammapping
+		WHERE sc_equipborrow.`eqb_team`=sc_teammapping.`tmm_id`
+	</select>
+</mapper>

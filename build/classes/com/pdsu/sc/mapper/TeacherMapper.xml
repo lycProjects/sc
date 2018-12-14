@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdsu.sc.mapper.TeacherMapper">
+	<resultMap id="BaseResultMap" type="com.pdsu.sc.po.Teacher">
+		<id column="te_id" jdbcType="INTEGER" property="teId" />
+		<result column="te_name" jdbcType="VARCHAR" property="teName" />
+		<result column="te_unit" jdbcType="VARCHAR" property="teUnit" />
+		<result column="te_phone" jdbcType="VARCHAR" property="tePhone" />
+		<result column="te_position" jdbcType="VARCHAR"
+			property="tePosition" />
+		<result column="te_IDcard" jdbcType="VARCHAR"
+			property="teIdcard" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		te_id, te_name, te_unit, te_phone, te_position, te_IDcard
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.pdsu.sc.po.TeacherExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sc_teacher
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sc_teacher
+		where te_id = #{teId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from sc_teacher
+		where te_id = #{teId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.pdsu.sc.po.TeacherExample">
+		delete from sc_teacher
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.pdsu.sc.po.Teacher">
+		insert into sc_teacher (te_id, te_name, te_unit,
+		te_phone, te_position, te_IDcard
+		)
+		values (#{teId,jdbcType=INTEGER}, #{teName,jdbcType=VARCHAR},
+		#{teUnit,jdbcType=VARCHAR},
+		#{tePhone,jdbcType=VARCHAR}, #{tePosition,jdbcType=VARCHAR}, #{teIdcard,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.pdsu.sc.po.Teacher">
+		insert into sc_teacher
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="teId != null">
+				te_id,
+			</if>
+			<if test="teName != null">
+				te_name,
+			</if>
+			<if test="teUnit != null">
+				te_unit,
+			</if>
+			<if test="tePhone != null">
+				te_phone,
+			</if>
+			<if test="tePosition != null">
+				te_position,
+			</if>
+			<if test="teIdcard != null">
+				te_IDcard,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="teId != null">
+				#{teId,jdbcType=INTEGER},
+			</if>
+			<if test="teName != null">
+				#{teName,jdbcType=VARCHAR},
+			</if>
+			<if test="teUnit != null">
+				#{teUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="tePhone != null">
+				#{tePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="tePosition != null">
+				#{tePosition,jdbcType=VARCHAR},
+			</if>
+			<if test="teIdcard != null">
+				#{teIdcard,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.pdsu.sc.po.TeacherExample"
+		resultType="java.lang.Long">
+		select count(*) from sc_teacher
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sc_teacher
+		<set>
+			<if test="record.teId != null">
+				te_id = #{record.teId,jdbcType=INTEGER},
+			</if>
+			<if test="record.teName != null">
+				te_name = #{record.teName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.teUnit != null">
+				te_unit = #{record.teUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="record.tePhone != null">
+				te_phone = #{record.tePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="record.tePosition != null">
+				te_position = #{record.tePosition,jdbcType=VARCHAR},
+			</if>
+			<if test="record.teIdcard != null">
+				te_IDcard = #{record.teIdcard,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sc_teacher
+		set te_id = #{record.teId,jdbcType=INTEGER},
+		te_name = #{record.teName,jdbcType=VARCHAR},
+		te_unit = #{record.teUnit,jdbcType=VARCHAR},
+		te_phone = #{record.tePhone,jdbcType=VARCHAR},
+		te_position = #{record.tePosition,jdbcType=VARCHAR},
+		te_IDcard = #{record.teIdcard,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.pdsu.sc.po.Teacher">
+		update sc_teacher
+		<set>
+			<if test="teName != null">
+				te_name = #{teName,jdbcType=VARCHAR},
+			</if>
+			<if test="teUnit != null">
+				te_unit = #{teUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="tePhone != null">
+				te_phone = #{tePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="tePosition != null">
+				te_position = #{tePosition,jdbcType=VARCHAR},
+			</if>
+			<if test="teIdcard != null">
+				te_IDcard = #{teIdcard,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where te_id = #{teId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.pdsu.sc.po.Teacher">
+		update sc_teacher
+		set te_name = #{teName,jdbcType=VARCHAR},
+		te_unit = #{teUnit,jdbcType=VARCHAR},
+		te_phone = #{tePhone,jdbcType=VARCHAR},
+		te_position = #{tePosition,jdbcType=VARCHAR},
+		te_IDcard = #{teIdcard,jdbcType=VARCHAR}
+		where te_id = #{teId,jdbcType=INTEGER}
+	</update>
+	
+	<!--insert-->
+	<select id="queryAllTeacher" resultType="com.pdsu.sc.po.Teacher">
+	   SELECT sc_teacher.te_id,sc_teacher.te_name,sc_teacher.te_unit,sc_teacher.te_phone,sc_teacher.te_position,sc_teacher.te_IDcard
+       FROM sc_teacher	
+	</select>
+	
+</mapper>
